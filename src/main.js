@@ -1,9 +1,8 @@
 import "./styles.css";
-// import porky from "../public/Signal_PIG.gltf"
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-
+// 
 const sizes = {
   width: window.innerWidth,
   height: window.innerHeight
@@ -12,11 +11,14 @@ const sizes = {
 const canvas = document.querySelector("canvas.webGL")
 // const loader = new GLTFLoader();
 
+//scene + camera
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 35, sizes.width / sizes.height, 0.1, 1000 );
 scene.add(camera)
 
 camera.position.z = 5;
+
+
 //objects
 
 const geometry = new THREE.BoxGeometry(1,1,1);
