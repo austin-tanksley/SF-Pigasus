@@ -1,12 +1,14 @@
 {
   "name": "sf-pigasus",
-  "homepage": "https://austin-tanksley.github.io/SF-Pigasus",
+  "homepage": "https://austin-tanksley.github.io/SF-Pigasus/",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +17,6 @@
     "vite": "^6.3.0"
   },
   "dependencies": {
-    "gh-pages": "^6.3.0",
     "three": "^0.175.0"
   }
 }
