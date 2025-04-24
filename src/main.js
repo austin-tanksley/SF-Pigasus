@@ -21,10 +21,10 @@ const camera = new THREE.PerspectiveCamera( 25, sizes.width / sizes.height, 0.1,
 scene.add(camera)
 
 camera.position.z = 4 ;
-camera.position.y = 3;
-camera.position.x = 2;
+camera.position.y = 4;
+camera.position.x = 1.8;
 const controls = new OrbitControls(camera, canvas);
-controls.target.y = .75;
+controls.target.y = .85;
 controls.enableDamping = true;
 
 //lights
@@ -60,10 +60,19 @@ scene.add(spot_light);
 //models
 const pig_mat = materials.gold_paint;
 const gltfLoader = new GLTFLoader()
+
+let mixer = null;
+
 gltfLoader.load(
   '/pigasus.glb',
   (gltf) => {
     console.log(gltf)
+
+    mixer = new THREE.AnimationMixer(gltf.scene);
+    const action = mixer.clipAction(gltf.animations[1]);
+
+    action.play()
+
     gltf.scene.children[0].children[0].material = pig_mat;
     gltf.scene.children[0].children[0].map = pig_mat;
     scene.add(gltf.scene.children[0])
@@ -86,15 +95,26 @@ scene.add(plane);
 //renderer
 const renderer = new THREE.WebGLRenderer(
   {
-    canvas: canvas
+    canvas: canvas,
+    antialias: true
   }
 );
 renderer.setSize(sizes.width, sizes.height)
 // renderer.render(scene, camera)
 
+const clock = new THREE.Clock();
+let previous_time = 0;
 
 const frame = () => {
 
+  const elapsed_time = clock.getElapsedTime();
+  const delta_time = elapsed_time - previous_time;
+  previous_time = elapsed_time;
+
+  if (mixer !== null)
+  {
+    mixer.update(delta_time)
+  }
   controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(frame);
